@@ -1,0 +1,126 @@
+{{>header}}
+{{>sidebar}}
+{{>navbar}}
+
+{{#if message}}
+<div class="alert alert-{{message.type}}" role="alert">
+    {{message.message}}
+</div>
+{{/if}}
+<div class="container-fluid">
+    <div class="row mt-2">
+        <div class="col-xl-6 col-md-6">
+            <div class="card shadow ml-2">
+                <div class="card-header py-3">
+                    <h1 class="m-0 font-weight-bold text-primary">{{title}}</h1>
+                </div>
+                <div class="card-body">
+                    <form action="/addTicket/{{id}}" method="POST" >
+                        <div class="form-group">
+                            <label for="">Date</label>
+                            <input type="date" class="form-control form-control-user" name="date_now" id="date_now" onchange="date(event)">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Show Time</label>
+                            <select class="form-select" name="time_now" id="time" onchange="timeShow(event)">
+                                <option selected disabled>Select Time</option>
+                                <option value="10:00">10:00</option>
+                                <option value="12:00">12:00</option>
+                                <option value="14:00">14:00</option>
+                                <option value="16:00">16:00</option>
+                                <option value="18:00">18:00</option>
+                                <option value="20:00">20:00</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Seat Number</label>
+                            <input type="text" class="form-control form-control-user" name="seat" id="seatNumber">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Price</label>
+                            <input type="text" class="form-control form-control-user" name="price" id="price" value="">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Teater</label>
+                            <input type="text" class="form-control form-control-user" name="venue" id="venue" value="">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-user btn-block"> Booking </button>
+                        </div>
+                        <div class="form-group">
+                            <a href="/" class="btn btn-danger btn-user btn-block">Back</a>
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6 col-md-6">
+            <div class="card shadow mr-2">
+                <button class="btn btn-primary btn-user btn-block mb-2" id="buttonSeat" onclick="seat()">Choice Seat</button>
+                <div id="seat">
+                </div>
+                <a href="" class="btn btn-success btn-user btn-block mt-2">
+                    Screen Bioskop
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+
+    function date(e) {
+        var date = new Date(e.target.value);
+        var day = date.getDay();
+        const weekdays = [1,2,3,4]
+        const friday = [5]
+        if (weekdays.includes(day)) {
+            $('#price').val('30000')
+        } else if (friday.includes(day)){
+            $('#price').val('35000')
+        } else
+        $('#price').val('40000')
+    }
+
+    function seat(){
+        const total = 8
+        const rows = ['J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A']
+        rows.forEach(function (row) {
+            let divRow = '<div class="seat">'
+            for(let i=1; i <= total; i++){
+                const button = '<button class="number" value="'+ row + i +'" onclick="inputSeat(\''+ row + i +'\')">'+ row + i +'</button>'
+                //const button = `<button class="number" value="${+ row + i +}" onclick="inputSeat('${+ row + i +}')">${+ row + i +}</button>`
+                divRow += button
+            }
+            divRow += '</div>'
+            document.getElementById("seat").innerHTML += divRow;
+            document.getElementById("buttonSeat").disabled = true
+        })
+    }
+    seat();
+
+    function inputSeat(e){
+        $('#seatNumber').val(e)
+    }
+
+    function timeShow(e){
+        const time = e.target.value
+        if (time == '10:00'){
+            $('#venue').val('Teater 1')
+        } else if(time == '12:00'){
+            $('#venue').val('Teater 2')
+        } else if(time == '14:00'){
+            $('#venue').val('Teater 3')
+        } else if(time == '16:00'){
+            $('#venue').val('Teater 4')
+        } else if(time == '18:00'){
+            $('#venue').val('Teater 5')
+        } else if(time == '20:00'){
+            $('#venue').val('Teater 6')
+        }
+    }
+    document.getElementById('ticket_number').value = Math.floor(100000 + Math.random() * 900000)
+    //$('#ticket_number').val(Math.floor(100000 + Math.random() * 900000))
+</script>
+{{>footer}}

@@ -1,0 +1,47 @@
+{{>header}}
+{{>sidebar}}
+{{>navbar}}
+
+<div class="container-fluid d-flex justify-content-center">
+    <div class="row mt-5">
+        {{#each tickets}}
+        <div class="col-xl-6 col-md-6 mb-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h1 class="m-0 font-weight-bold text-primary">{{this.name}}</h1>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <tr>
+                                    <th>Date:</th>
+                                    <td>{{this.date_show}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Time:</th>
+                                    <td>{{this.time_show}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Seat:</th>
+                                    <td>{{this.seat}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Venue:</th>
+                                    <td>{{this.venue}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Price:</th>
+                                    <td>{{this.price}}</td>
+                                </tr>
+                            
+                            </div>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>
+
+{{>footer}}

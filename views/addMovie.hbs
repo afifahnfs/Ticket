@@ -1,0 +1,68 @@
+{{>header}}
+{{>sidebar}}
+{{>navbar}}
+
+{{#if message}}
+<div class="alert alert-{{message.type}}" role="alert">
+    {{message.message}}
+</div>
+{{/if}}
+
+<div class="container-fluid d-flex justify-content-center">
+    <div class="card shadow mb-4 w-75 ">
+        <div class="card-header py-3">
+            <h1 class="m-0 font-weight-bold text-primary">{{title}}</h1>
+        </div>
+        <div class="card-body">
+            <form action="/addMovie" method="POST" enctype="multipart/form-data">
+                <div class="file-input-group text-start">
+                    <label for="file">Input Image<img src="/public/icons/attach.svg" alt=""></label>
+                    <input type="file" hidden id="file" name="photo" onchange="handleChange()"
+                        aria-label="File browser example">
+                    <div id="preview-thumbnail"></div>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-user" name="name" placeholder="Title">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-user" name="director" placeholder="Director">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-user" name="cast" placeholder="Cast">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-user" name="movie_hours" placeholder="Duration Movie">
+                </div>
+                <div class="form-group">
+                    <select type="text" class="form-control" name="type_id" >
+                        <option value=""  disabled selected>Pilih Genre</option>
+                        {{#each types}}
+                        <option value="{{this.id}}">{{this.name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control form-control-user" name="synopsis" placeholder="Synopsis">
+                    </textarea>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-user btn-block"> Input </button>
+                </div>
+                <div class="form-group">
+                    <a href="/" class="btn btn-danger btn-user btn-block">Back</a>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+</div>
+
+<script>
+    function handleChange() {
+        const previewElement = document.getElementById('preview-thumbnail')
+        const value = URL.createObjectURL(event.target.files[0])
+
+        previewElement.innerHTML = `<img src=${value} style="width:250px;" class="mb-3" />`
+    }
+</script>
+{{>footer}}

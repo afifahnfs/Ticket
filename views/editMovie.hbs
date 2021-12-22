@@ -1,0 +1,81 @@
+{{>header}}
+{{>sidebar}}
+{{>navbar}}
+
+{{#if message}}
+<div class="alert alert-{{message.type}}" role="alert">
+    {{message.message}}
+</div>
+{{/if}}
+
+<div class="container-fluid d-flex justify-content-center">
+    <div class="card shadow mb-4 w-75 ">
+        <div class="card-header py-3">
+            <h1 class="m-0 font-weight-bold text-primary">{{title}}</h1>
+        </div>
+        <div class="card-body">
+            <form action="/edit-movie" method="POST" enctype="multipart/form-data">
+                <div class="file-input-group text-start">
+                    <label for="file">Input Image<img src="/public/icons/attach.svg" alt=""></label>
+                    <input type="file" hidden id="file" name="photo" onchange="handleChange()"
+                        aria-label="File browser example">
+                    <input type="hidden" name="oldImage" value="{{movie.photo}}">
+                    <input type="hidden" name="url-thumbnail" id="url-thumbnail"  value="{{movie.photo}}">
+                    <input type="hidden" value="{{movie.id}}" name="id">
+                    <div id="preview-thumbnail"></div>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-user" name="name" value="{{movie.name}}">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-user" name="director" value="{{movie.director}}">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-user" name="cast" value="{{movie.cast}}">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-user" name="movie_hours" value="{{movie.movie_hours}}">
+                </div>
+                <div class="form-group">
+                    <select type="text" class="form-control" name="type_id">
+                        <option value="" disabled>Pilih Genre</option>
+                        {{#each types }}
+                            {{#ifCond ../movie.type_id '==' this.id }}
+                                <option value="{{this.id}}" selected>{{this.name}}</option>
+                            {{else}}
+                                <option value="{{this.id}}">{{this.name}}</option>
+                            {{/ifCond}}
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control form-control-user" name="synopsis">
+                        {{movie.synopsis}}
+                    </textarea>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-user btn-block"> Input </button>
+                </div>
+                <div class="form-group">
+                    <a href="/" class="btn btn-danger btn-user btn-block">Back</a>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+</div>
+
+<script>
+
+    const previewElement = document.getElementById('preview-thumbnail');
+    const urlThumbnail = document.getElementById('url-thumbnail').value;
+
+    console.log(urlThumbnail)
+    previewElement.innerHTML = `<img src="${urlThumbnail}" style="width: 250px; margin-left: 170px;" class="mb-3"/>`;
+
+    function handleChange() {
+        const value = URL.createObjectURL(event.target.files[0]);
+        previewElement.innerHTML = `<img src="${value}" style="width: 250px; margin-left: 170px;" class="mb-3"/>`
+    }
+</script>
+{{>footer}}

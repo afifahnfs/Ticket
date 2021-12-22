@@ -1,0 +1,55 @@
+{{>header}}
+{{>sidebar}}
+{{>navbar}}
+
+<div class="container-fluid d-flex justify-content-center">
+        <div class="card shadow mb-4 w-50">
+            <div class="card-header py-3">
+                <h1 class="m-0 font-weight-bold text-primary">{{ticket.name}}</h1>
+            </div>
+            <div class="card-body">
+                <form action="" method="POST" >
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <tr>
+                            <th>Title Movie:</th>
+                            <td>{{ticket.title_movie}}</td>
+                        </tr>
+                        <tr>
+                            <th>Date:</th>
+                            <td class="date_show">{{ticket.day}}-{{ticket.month}}-{{ticket.year}}</td>
+                        </tr>
+                        <tr>
+                            <th>Time:</th>
+                            <td>{{ticket.time_show}}</td>
+                        </tr>
+                        <tr>
+                            <th>Seat:</th>
+                            <td>{{ticket.seat}}</td>
+                        </tr>
+                        <tr>
+                            <th>Venue:</th>
+                            <td>{{ticket.venue}}</td>
+                        </tr>
+                        <tr>
+                            <th>Price:</th>
+                            <td>Rp.{{ticket.price}}</td>
+                        </tr>
+                    </table>
+                </div>
+                </form>
+                <a href="/payment/{{ticket.id}}" class="btn btn-success btn-user btn-block"> Order </a>
+                <a href="/edit-ticket/{{ticket.id}}" class="btn btn-primary btn-user btn-block">Back</a>
+                <a href="/delete-ticket/{{ticket.id}}" class="btn btn-danger btn-user btn-block">Cancelled</a>
+            </div>
+        </div>
+</div>
+
+<script>
+    function date() {
+        var myDate = document.querySelector(date_show);
+        var today = new Date();
+        myDate.value = today.toISOString().substr(0, 10);
+    }
+</script>
+{{>footer}}

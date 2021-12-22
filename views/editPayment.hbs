@@ -1,0 +1,58 @@
+{{>header}}
+{{>sidebar}}
+{{>navbar}}
+
+{{#if message}}
+<div class="alert alert-{{message.type}}" role="alert">
+    {{message.message}}
+</div>
+{{/if}}
+<div class="container-fluid d-flex justify-content-center">
+    <div class="card shadow ml-2 w-50">
+        <div class="card-header py-3">
+            <h1 class="m-0 font-weight-bold text-primary">{{title}}</h1>
+        </div>
+        <div class="card-body">
+            <form action="/edit-payment/{{payment.id}}" method="POST" >
+                <div class="form-group">
+                    <label for="">Costumer</label>
+                    <input type="text" class="form-control form-control-user" value="{{payment.name}}" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="">Movie</label>
+                    <input type="text" class="form-control form-control-user" value="{{payment.title_movie}}" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="">Price</label>
+                    <input type="text" class="form-control form-control-user" id="price" value="{{payment.price}}" >
+                </div>
+                <div class="form-group">
+                    <label for="">Amount</label>
+                    <input type="number" class="form-control form-control-user" name="amount" value="{{payment.amount}}" onchange="amountTicket(event)">
+                </div>
+                <div class="form-group">
+                    <label for="">Total Price</label>
+                    <input type="text" class="form-control form-control-user" name="sub_total" id="total" value="{{payment.sub_total}}">
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-user btn-block"> Checkout </button>
+                </div>
+                <div class="form-group">
+                    <a href="/" class="btn btn-danger btn-user btn-block">Back</a>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+</div>
+
+<script>
+    const price = document.getElementById('price').value
+    function amountTicket(event){
+        let amount = event.target.value
+        let result = amount * price
+        $('#total').val(result)
+    }
+</script>
+{{>footer}}
